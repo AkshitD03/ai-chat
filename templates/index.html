@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Marketplace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Additional inline styles for the index page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .marketplace-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .marketplace-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .chatbot-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbot-item h2 {
+            font-size: 24px;
+        }
+
+        .chatbot-item p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .create-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Chatbot Marketplace</h1>
+    </header>
+    <div class="marketplace-container">
+        <h2 class="marketplace-title">Explore Chatbots</h2>
+        {% for chatbot in chatbots %}
+            <div class="chatbot-item">
+                <h2>{{ chatbot['bot_name'] }}</h2>
+                <p>{{ chatbot['bot_description'] }}</p>
+                <a href="{{ url_for('chatbot_view', bot_name=chatbot['bot_name']) }}">Chat with {{ chatbot['bot_name'] }}</a>
+            </div>
+        {% endfor %}
+        <a href="{{ url_for('create_chatbot') }}" class="create-button">Create a Chatbot</a>
+    </div>
+    
+
+    <!-- Styled 'a' tag like a button -->
+   
+
+    <!-- ... (more content) ... -->
+
+    <script>
+        // Function to save user data to local storage
+        function saveUserData() {
+            const userInput = document.getElementById('user-input').value;
+            localStorage.setItem('userInput', userInput);
+        }
+
+        // Function to load user data from local storage
+        function loadUserData() {
+            const userInput = localStorage.getItem('userInput');
+            if (userInput) {
+                document.getElementById('user-input').value = userInput;
+            }
+        }
+
+        // Load user data when the page loads
+        loadUserData();
+
+        // Save user data when the user leaves the page
+        window.addEventListener('beforeunload', saveUserData);
+    </script>
+</body>
+</html>

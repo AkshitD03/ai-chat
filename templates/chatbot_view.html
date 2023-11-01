@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ chatbot.bot_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <style media="screen">
+        /* styles.css */
+    
+    /* General styling for the entire page */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+    
+    /* Header styling */
+    header {
+        background-color: #007BFF;
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    /* Marketplace styling */
+    .marketplace-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .marketplace-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    .chatbot-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+    
+    .chatbot-item h2 {
+        font-size: 20px;
+    }
+    
+    /* Chatbot view styling */
+    .chatbot-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .chatbot-header {
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .chatbot-header h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    
+    .chatbot-description {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .chatbot-chat {
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
+    
+    .chatbot-conversation {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+    }
+    
+    .message {
+        margin: 5px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    
+    .chatbot-input {
+        margin-top: 10px;
+        display: flex;
+    }
+    
+    .chatbot-input input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    .chatbot-input button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .delete-button{
+        padding: 10px 20px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    </style>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h1>{{ chatbot.bot_name }}</h1>
+            <p>{{ chatbot.bot_description }}</p>
+        </div>
+        <div class="chatbot-chat">
+            <div class="chatbot-conversation" id="chatbot-conversation">
+                <!-- Chat messages will be displayed here -->
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="user-input" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+            <!-- Add this button to chatbot_view.html -->
+            <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+<form method="POST" action="{{ url_for('delete_chatbot', bot_name=chatbot.bot_name) }}">
+    <button type="submit" class="delete-button">Delete Chatbot</button>
+</form>
+
+        </div>
+    </div>
+    <script>
+        const chatContainer = document.querySelector('.chatbot-conversation');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        sendButton.addEventListener('click', async () => {
+            const userMessage = userInput.value;
+            const prompt = "{{ chatbot.bot_behavior }}" + userMessage;
+
+            // Append user message to the conversation
+            appendMessage('👦', userMessage);
+
+            try {
+                const response = await fetch('/chatbot_interaction', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Append AI response to the conversation
+                    appendMessage('🤖', data.response);
+                    userInput.value = '';
+                } else {
+                    console.error('Error fetching chatbot response');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        function appendMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.textContent = `${sender}: ${message}`;
+            chatContainer.appendChild(messageElement);
+        }
+    </script>
+</body>
+</html>

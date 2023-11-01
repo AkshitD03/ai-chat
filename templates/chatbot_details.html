@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Add this line to the <head> section of your HTML templates -->
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<style media="screen">
+    /* styles.css */
+
+/* General styling for the entire page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styling */
+header {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Marketplace styling */
+.marketplace-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.marketplace-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.chatbot-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.chatbot-item h2 {
+    font-size: 20px;
+}
+
+/* Chatbot view styling */
+.chatbot-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-header {
+    text-align: center;
+    padding: 20px;
+}
+
+.chatbot-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.chatbot-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.chatbot-chat {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.chatbot-conversation {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.message {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.chatbot-input {
+    margin-top: 10px;
+    display: flex;
+}
+
+.chatbot-input input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.chatbot-input button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+</style>
+<body>
+    <h1>Chatbot Details</h1>
+    <div class="chatbot-details">
+        <h2>{{ chatbot.bot_name }}</h2>
+        <p>Description: {{ chatbot.bot_description }}</p>
+        <p>Intro Message: {{ chatbot.intro_message }}</p>
+        <p>Chatbot Response: {{ chatbot.chatbot_response }}</p>
+        <!-- Add a back button to return to the marketplace -->
+        <a href="{{ url_for('index') }}" class="btn">Back to Marketplace</a>
+    </div>
+</body>
+</html>
